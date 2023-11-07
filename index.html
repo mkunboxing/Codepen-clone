@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="icon" type="image/x-icon" href="codepen_logo.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Raleway&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/be3ffc23ba.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Mukul's CodePen</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Sasta CodePen Clone</h1>
+      <div class="codes">
+        <div class="html">
+          <label
+            ><i class="fa-brands fa-html5" style="color: #fd4508"></i>
+            HTML</label
+          >
+          <textarea
+            id="html-code"
+            onkeyup="run()"
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <div class="css">
+          <label
+            ><i class="fa-brands fa-css3-alt" style="color: #1c6efd"></i>
+            CSS</label
+          >
+          <textarea id="css-code" onkeyup="run()" spellcheck="false"></textarea>
+        </div>
+
+        <div class="js">
+          <label
+            ><i class="fa-brands fa-square-js" style="color: #e0c200"></i>
+            JavaScript</label
+          >
+          <textarea id="js-code" onkeyup="run()" spellcheck="false"></textarea>
+        </div>
+      </div>
+      <div class="splitter" id="splitter"></div>
+      <div class="output">
+        <label
+          ><i class="fa-solid fa-play" style="color: #ff0000"></i> Output</label
+        >
+        <iframe id="output"></iframe>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+      const splitter = document.getElementById("splitter"); // Get the splitter element
+      const topSide = document.querySelector(".codes"); // Get the top side content
+      const bottomSide = document.querySelector(".output"); // Get the bottom side content
+
+      let isResizing = false;
+
+      splitter.addEventListener("mousedown", (e) => {
+        isResizing = true;
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      });
+
+      function onMouseMove(e) {
+        if (!isResizing) return;
+
+        const y = e.clientY;
+        const containerRect = document
+          .querySelector(".container")
+          .getBoundingClientRect(); // Get the container's bounding box
+        const containerHeight = containerRect.height;
+        const dividerHeight = splitter.clientHeight;
+        const minY = 100; // Set a minimum height for the top side
+        const maxY = containerHeight - dividerHeight - 100; // Set a maximum height for the top side
+
+        const newTopHeight = Math.min(
+          maxY,
+          Math.max(minY, y - containerRect.top)
+        );
+        topSide.style.flex = `0 0 ${newTopHeight}px`; // Set the new height of the top side
+      }
+
+      function onMouseUp() {
+        isResizing = false;
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+      }
+    </script>
+  </body>
+</html>
