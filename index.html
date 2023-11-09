@@ -12,17 +12,22 @@
   <script src="https://kit.fontawesome.com/be3ffc23ba.js" crossorigin="anonymous"></script>
 
    <!-- codemirror -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.css">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/javascript/javascript.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/css/css.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/mode/javascript/javascript.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.3/theme/dracula.min.css">
+
+
 
 
   <title>Mukul's CodePen</title>
 </head>
 
 <body>
+  <h1>Sasta CodePen Clone</h1>
   <div class="container">
-    <h1>Sasta CodePen Clone</h1>
     <div class="codes">
       <div class="html">
         <label><i class="fa-brands fa-html5" style="color: #fd4508"></i>
@@ -44,63 +49,14 @@
     </div>
     <div class="splitter" id="splitter"></div>
     <div class="output">
-      <label><i class="fa-solid fa-play" style="color: #ff0000"></i> Output</label>
+      <label id="run"><i class="fa-solid fa-play" style="color: #ff0000"> &nbsp; &nbsp; Run</i> &nbsp;  Output</label>
       <iframe id="output"></iframe>
     </div>
   </div>
 
   <script src="script.js"></script>
 
-  <script>
-    let html_code = CodeMirror.fromTextArea(document.getElementById("html-code"), {
-      // mode: "text/html",
-      // lineNumbers: true,
-      // theme: "monokai",
-      mode : 'xml',
-      lineWrapping: true,
-      lineNumbers: true,
-      theme: "dracula",
-    })
-  </script>
-
-  <script>
-    const splitter = document.getElementById("splitter"); // Get the splitter element
-    const topSide = document.querySelector(".codes"); // Get the top side content
-    const bottomSide = document.querySelector(".output"); // Get the bottom side content
-
-    let isResizing = false;
-
-    splitter.addEventListener("mousedown", (e) => {
-      isResizing = true;
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
-    });
-
-    function onMouseMove(e) {
-      if (!isResizing) return;
-
-      const y = e.clientY;
-      const containerRect = document
-        .querySelector(".container")
-        .getBoundingClientRect(); // Get the container's bounding box
-      const containerHeight = containerRect.height;
-      const dividerHeight = splitter.clientHeight;
-      const minY = 100; // Set a minimum height for the top side
-      const maxY = containerHeight - dividerHeight - 100; // Set a maximum height for the top side
-
-      const newTopHeight = Math.min(
-        maxY,
-        Math.max(minY, y - containerRect.top)
-      );
-      topSide.style.flex = `0 0 ${newTopHeight}px`; // Set the new height of the top side
-    }
-
-    function onMouseUp() {
-      isResizing = false;
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    }
-  </script>
+  <script src="splitter.js"></script>
 </body>
 
 </html>
